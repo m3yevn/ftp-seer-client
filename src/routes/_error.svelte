@@ -6,8 +6,7 @@
 </script>
 
 <style>
-  h1,
-  p {
+  h1 {
     margin: 0 auto;
   }
 
@@ -19,10 +18,6 @@
 
   .wrapper {
 	  background-image: linear-gradient(to top right, black, rgba(121, 7, 121, 0.863));
-  }
-
-  p {
-    margin: 1em auto;
   }
 
   @media (min-width: 480px) {
