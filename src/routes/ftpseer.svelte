@@ -3,7 +3,7 @@
   const { page } = stores();
   import { onMount } from "svelte";
 
-  let result,
+  let directoryList = [],
     isLoading = false;
   let error = {},
     touched = {};
@@ -12,6 +12,11 @@
   }
   $: if (touched.path) {
     error.path = !path;
+  }
+  $: if (error.alert) {
+    alert(error.alert);
+    delete error.alert;
+    isLoading = false;
   }
   let host, port, path, username, password;
   onMount(async () => {
@@ -47,16 +52,18 @@
   };
 
   const submitHandler = e => {
-    isLoading = true;
-    getResult()
-      .then(res => {
-        console.log(res);
-        result = JSON.stringify(res);
-        isLoading = false;
-      })
-      .catch(err => {
-        result = err.message;
-      });
+    touched = { host: true, path: true };
+    if (!error.host && !error.path) {
+      isLoading = true;
+      getResult()
+        .then(res => {
+          directoryList = res.data;
+          isLoading = false;
+        })
+        .catch(err => {
+          error.alert = err.message;
+        });
+    }
   };
 </script>
 
@@ -134,17 +141,47 @@
     </div>
   </div>
   <div class="col-sm-9 p-2 vh-100">
-    {#if result && !isLoading}
-      <div class="card text-light glassy-card h-100">{result || ''}</div>
-    {:else if !result && !isLoading}
-    <div class="d-flex justify-content-center align-items-center h-100">
-        <p class="text-muted h2">Explore from Dial Pad</p>
-      </div>
-    {/if}
-    {#if isLoading}
-      <div class="d-flex justify-content-center align-items-center h-100">
-        <div class="spinner-grow glowy-spinner" role="status" />
-      </div>
-    {/if}
+    <div class="card text-light glassy-card h-100">
+      {#if directoryList.length > 0 && !isLoading}
+        {#if path !== '.'}
+          <div class="breadcrumb" />
+        {/if}
+        <div class="container">
+          <div class="row">
+            {#each directoryList as directory}
+              <div class="col-lg-3 col-md-4 col-sm-6 p-3">
+                <div class="card glassy-card-black text-center px-0 py-2 btn btn-outline-primary">
+                  {#if directory.type === 1}
+                    <i class="fas fa-folder" style="font-size:3em" />
+                  {:else}
+                    <i class="fas fa-file" style="font-size:3em" />
+                  {/if}
+                  <span style="font-size:15px; color: white">{directory.name}</span>
+                </div>
+              </div>
+            {/each}
+          </div>
+        </div>
+      {:else if directoryList.length === 0 && !isLoading}
+        <div class="d-flex justify-content-center align-items-center h-100">
+          <i
+            class="fas fa-hat-wizard glassy-font glow"
+            style="font-size:10em" />
+        </div>
+        <div class="d-flex justify-content-center">
+          <p class="glassy-font">
+            Powered by the magic of SvelteJS Sapper framework!
+          </p>
+        </div>
+      {/if}
+      {#if isLoading}
+        <div class="d-flex justify-content-center align-items-center h-100">
+          <div class="lds-ripple" style="transform: scale(2.5);">
+            <div />
+            <div />
+          </div>
+        </div>
+      {/if}
+    </div>
   </div>
 </div>

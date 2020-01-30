@@ -24,6 +24,39 @@ a {
 	color: inherit;
 }
 
+.lds-ripple {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .lds-ripple div {
+    position: absolute;
+    border: 4px solid #fff;
+    opacity: 1;
+    border-radius: 50%;
+    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  }
+  .lds-ripple div:nth-child(2) {
+    animation-delay: -0.5s;
+  }
+  @keyframes lds-ripple {
+    0% {
+      top: 36px;
+      left: 36px;
+      width: 0;
+      height: 0;
+      opacity: 1;
+    }
+    100% {
+      top: 0px;
+      left: 0px;
+      width: 72px;
+      height: 72px;
+      opacity: 0;
+    }
+  }
+
 code {
 	font-family: menlo, inconsolata, monospace;
 	font-size: calc(1em - 2px);
@@ -40,13 +73,13 @@ code {
 }
 
 .btn-outline-primary {
-	color: magenta;
+	color: rgba(204, 0, 255, 0.89);
 	border-color: magenta;
 }
 
 .btn-outline-primary:hover, .btn-outline-primary:focus, .btn-outline-primary:active, .btn-outline-primary.active, .open>.dropdown-toggle.btn-outline-primary {
     color: #fff;
-    background-color: magenta;
+    background-color: rgba(255, 0, 255, 0.404);
 	border-color: magenta;
 	animation: glow 1s ease-in-out infinite alternate;
 }
@@ -68,9 +101,17 @@ code {
 }
 
 .glassy-card {
-    background: rgba(255, 255, 255, 0.247);
+    background: rgba(255, 255, 255, 0.247) !important;
 	overflow: auto;
 	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+.glassy-card-black {
+    background: rgba(0, 0, 0, 0.308) !important;
+	overflow: auto;
+	box-shadow: inset 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+.glassy-font {
+	color: rgba(0, 0, 0, 0.377);
 }
 
 @keyframes glow {
