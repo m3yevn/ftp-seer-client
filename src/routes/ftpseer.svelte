@@ -42,7 +42,7 @@
         error.path = !thisPath;
       } else {
         fetch(
-          `https://${$page.query.host}:${$page.query.port}/ftpseer/directory?${
+          `https://${$page.query.host}/ftpseer/directory?${
             username ? `username=${username}` : ""
           }&${password ? `password=${password}` : ""}&${
             port ? `port=${port}` : ""
