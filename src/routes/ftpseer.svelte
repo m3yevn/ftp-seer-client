@@ -44,7 +44,7 @@
         error.path = !thisPath;
       } else {
         fetch(
-          `//${$page.query.host}${useHttps ? '':`:${$page.query.port}`}/ftpseer/directory?${
+          `//${$page.query.host}${$page.query.port === 80 ? '':`:${$page.query.port}`}/ftpseer/directory?${
             username ? `username=${username}` : ""
           }&${password ? `password=${password}` : ""}&${
             port ? `port=${port}` : ""
@@ -69,7 +69,7 @@
         error.path = !thisPath;
       } else {
         fetch(
-          `//${$page.query.host}${useHttps ? '':`:${$page.query.port}`}/ftpseer/file?${
+          `//${$page.query.host}${$page.query.port === 80  ? '':`:${$page.query.port}`}/ftpseer/file?${
             username ? `username=${username}` : ""
           }&${password ? `password=${password}` : ""}&${
             port ? `port=${port}` : ""
