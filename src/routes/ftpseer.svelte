@@ -15,12 +15,14 @@
   }
   $: if (error.alert) {
     console.error(error.alert);
+    isLoading = false;
   }
   $: previousPath = currentPath.substring(0, currentPath.lastIndexOf("/"));
   let host,
     port,
     path,
     username,
+    useHttps = false,
     password,
     showContent = false,
     content = "",
@@ -42,7 +44,7 @@
         error.path = !thisPath;
       } else {
         fetch(
-          `https://${$page.query.host}/ftpseer/directory?${
+          `//${$page.query.host}${useHttps ? '':`:${$page.query.port}`}/ftpseer/directory?${
             username ? `username=${username}` : ""
           }&${password ? `password=${password}` : ""}&${
             port ? `port=${port}` : ""
@@ -67,7 +69,7 @@
         error.path = !thisPath;
       } else {
         fetch(
-          `http://${$page.query.host}:${$page.query.port}/ftpseer/file?${
+          `//${$page.query.host}${useHttps ? '':`:${$page.query.port}`}/ftpseer/file?${
             username ? `username=${username}` : ""
           }&${password ? `password=${password}` : ""}&${
             port ? `port=${port}` : ""
@@ -171,10 +173,20 @@
   <!--Start of Side Panel-->
   <aside class="col-md-3 p-2">
     <div class="card glassy-card h-100">
-      <a class="text-center h2 text-light pt-3 glow" href="/">
-        <i class="fas fa-home" />
-        FTP Seer
-      </a>
+      <div class="d-flex">
+        <a class="text-center h2 text-light pt-3 glow col-9" href="/">
+          <i class="fas fa-home" />
+          FTP Seer
+        </a>
+        <!--div class="custom-control custom-switch col-3 px-1 text-light d-flex align-items-end">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            id="httpsSwitch" 
+            bind:checked={useHttps} />
+          <label class="custom-control-label" for="httpsSwitch">HTTPS</label>
+        </div-->
+      </div>
       <form class="p-3 text-light" on:submit|preventDefault={submitHandler}>
         <div class="form-group">
           <label for="host">
@@ -250,7 +262,11 @@
         <section class="card-header d-flex py-1">
           <h4 class="col-11">{title}</h4>
           <div class="col-1 d-flex justify-content-end align-items-center">
-          <i class="fas fa-times pointer" on:click={()=>{showContent=false}}></i>
+            <i
+              class="fas fa-times pointer"
+              on:click={() => {
+                showContent = false;
+              }} />
           </div>
         </section>
         <section class="card-body glassy-card-dark-purple">
