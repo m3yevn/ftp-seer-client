@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 body {
 	margin: 0;
 	font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
@@ -73,13 +77,13 @@ code {
 }
 
 .btn-outline-primary {
-	color: rgba(204, 0, 255, 0.89);
+	color: rgb(255, 0, 212);
 	border-color: magenta;
 }
 
 .btn-outline-primary:hover, .btn-outline-primary:focus, .btn-outline-primary:active, .btn-outline-primary.active, .open>.dropdown-toggle.btn-outline-primary {
-    color: #fff;
-    background-color: rgba(255, 0, 255, 0.404);
+  color: #fff;
+  background-color: rgba(255, 0, 255, 0.404);
 	border-color: magenta;
 	animation: glow 1s ease-in-out infinite alternate;
 }
@@ -91,6 +95,13 @@ code {
 .glow {
 	animation: glow 1s ease-in-out infinite alternate;
 }
+.glow:hover {
+  animation: none;
+  color: white;
+  text-decoration: none;
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073,
+        0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+}
 
 .glowy-spinner {
 	color: rgba(230, 122, 230, 0.616);
@@ -100,14 +111,38 @@ code {
         0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
 }
 
+.footer-background {
+  background-color: rgb(124, 104, 238);
+}
+
+.highlight {
+  color: rgb(255, 152, 174);
+}
+
+.blur-sheet {
+  height: 92.1vh;
+  background-image: linear-gradient(
+    to right top,
+    rgb(0, 0, 0),
+    rgba(99, 26, 182, 0.904)
+  );
+}
+
+.pointer {
+  cursor: pointer;
+}
+
 .glassy-card {
-    background: rgba(255, 255, 255, 0.247) !important;
+  background: rgba(255, 255, 255, 0.247) !important;
 	overflow: auto;
 	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
+.glassy-card-dark-purple {
+  background: rgba(51, 8, 87, 0.637) !important;
+	overflow-y: auto;
+}
 .glassy-card-black {
-    background: rgba(0, 0, 0, 0.308) !important;
-	overflow: auto;
+  background: rgba(0, 0, 0, 0.308) !important;
 	box-shadow: inset 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 .glassy-font {

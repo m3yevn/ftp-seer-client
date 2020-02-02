@@ -1,5 +1,6 @@
 <script>
-  let host, port;
+import Footer from "../components/footer.svelte";
+  let host ="", port = "";
   let error = {},
     touched = {};
   $: if (touched.host) {
@@ -35,16 +36,6 @@
     margin: 0 0 0.5em 0;
     color: whitesmoke;
   }
-
-  .blur-sheet {
-    height: 100vh;
-    background-image: linear-gradient(
-      to right top,
-      rgb(0, 0, 0),
-      rgba(99, 26, 182, 0.904)
-    );
-  }
-
   @media (min-width: 480px) {
     h1 {
       font-size: 4em;
@@ -59,16 +50,15 @@
   <section
     class="row no-gutters d-flex justify-content-start align-items-center
     blur-sheet">
-    <aside class="col-sm-6">
+    <aside class="col-md-6">
       <h1 class="px-1">
         Let FTP Seer guide
         <span class="glow">you</span>
-        .
       </h1>
     </aside>
-    <aside class="col-sm-6 d-flex justify-content-center">
+    <aside class="col-md-6 d-flex justify-content-center">
       <form
-        class="form text-light card glassy-card p-4 w-50"
+        class="form text-light card glassy-card col-lg-8 col-10 w-100 p-4"
         on:submit|preventDefault={goToNextPage}>
         <div class="form-group">
           <label for="host">
@@ -102,4 +92,5 @@
       </form>
     </aside>
   </section>
+  <Footer></Footer>
 </div>
