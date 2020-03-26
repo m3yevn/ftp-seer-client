@@ -20,19 +20,19 @@ Frontend Web Client for exploring FTP directory built with SvelteJs + Sapper Fra
 <hr/>
 
 ## Screenshots 📸
-Home page
+ - Home page
 <img src="https://raw.githubusercontent.com/m3yevn/ftp-seer-client/master/screenshots/ftp-seer-client-ss1.png" width="800"/>
 
-Getting contents of file
+ - Getting contents of file
 <img src="https://raw.githubusercontent.com/m3yevn/ftp-seer-client/master/screenshots/ftp-seer-client-ss2.png" width="800"/>
 
-Exploring directory of folder
+ - Exploring directory of folder
 <img src="https://raw.githubusercontent.com/m3yevn/ftp-seer-client/master/screenshots/ftp-seer-client-ss3.png" width="800"/>
 
-About page
+ - About page
 <img src="https://raw.githubusercontent.com/m3yevn/ftp-seer-client/master/screenshots/ftp-seer-client-ss4.png" width="800"/>
 
-Contributors page
+ - Contributors page
 <img src="https://raw.githubusercontent.com/m3yevn/ftp-seer-client/master/screenshots/ftp-seer-client-ss5.png" width="800"/>
 
 
