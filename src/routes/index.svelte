@@ -44,7 +44,7 @@ import Footer from "../components/footer.svelte";
 </style>
 
 <svelte:head>
-  <title>FTP Seer</title>
+  <title>Welcome to FTP Seer</title>
 </svelte:head>
 <div class="wrapper">
   <section
