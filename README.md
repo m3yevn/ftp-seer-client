@@ -17,6 +17,13 @@ Frontend Web Client for exploring FTP directory built with SvelteJs + Sapper Fra
   
 ##### *Need to run FTP Seer Server as mentioned below first to make it work*
 
+## ![Docker Pulls](https://img.shields.io/docker/pulls/m3yevn/ftp-seer-client?style=for-the-badge)
+
+```sh
+$ docker pull m3yevn/ftp-seer-client:latest
+$ docker run -d --name ftp-seer-client -p 5050:5050  m3yevn/ftp-seer-client:latest
+```
+
 <hr/>
 
 ## Screenshots 📸
