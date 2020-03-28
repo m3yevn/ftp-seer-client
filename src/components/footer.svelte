@@ -29,7 +29,7 @@ Crafted with ❤️ by <a class="highlight" href="https://github.com/m3yevn" tar
 <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
 <li><a href="/about"><i class="fas fa-info-circle"></i>About</a></li>
 <li><a href="/contributors"><i class="fas fa-users"></i>Contributors</a></li>
-<li><a href="https://github.com/m3yevn/ftp-seer-client"><i class="fab fa-github"></i>Github</a></li>
+<li><a href="https://github.com/m3yevn/ftp-seer-client" target="_blank"><i class="fab fa-github"></i>Github</a></li>
 </nav>
 </div>
 </footer>

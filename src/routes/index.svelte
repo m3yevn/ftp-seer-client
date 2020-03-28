@@ -1,6 +1,7 @@
 <script>
-import Footer from "../components/footer.svelte";
-  let host ="", port = "";
+  import Footer from "../components/footer.svelte";
+  let host = "",
+    port = "";
   let error = {},
     touched = {};
   $: if (touched.host) {
@@ -9,19 +10,55 @@ import Footer from "../components/footer.svelte";
   $: if (touched.port) {
     error.port = !port;
   }
-  const goToNextPage = () => {
+
+  const checkAPIstatus = (host, port) => {
+    return new Promise(async (resolve, reject) => {
+      fetch("//" + host + ":" + port + "/ftpseer")
+        .then(async response => {
+          const result = await response.json();
+          if (
+            result &&
+            result.routes &&
+            result.routes.length &&
+            result.routes[0].path === "/directory" &&
+            result.routes[1].path === "/file"
+          ) {
+            resolve(true);
+          }
+          reject(false);
+        })
+        .catch(err => {
+          reject(false);
+        });
+    });
+  };
+
+  const goToNextPage = async () => {
+    delete error['apiStatus'];
     if (!host || !port) {
       error.host = !host;
       error.port = !port;
-    } else {
-      window.location.href = `/ftpseer?${host ? `host=${host}` : ""}&${
-        port ? `port=${port}` : ""
-      }`;
+      return;
     }
+
+    const checkAPI = await checkAPIstatus(host, port).then(result => {
+      return result;
+    }).catch(err => {
+      return err;
+    });
+
+    if (!checkAPI) {
+      error.apiStatus = true;
+      return;
+    }
+
+    window.location.href = `/ftpseer?${host ? `host=${host}` : ""}&${
+      port ? `port=${port}` : ""
+    }`;
   };
-  const handleTouch = (e) => {
+  const handleTouch = e => {
     touched[e.target.id] = true;
-  }
+  };
 </script>
 
 <style>
@@ -86,11 +123,14 @@ import Footer from "../components/footer.svelte";
             bind:value={port}
             on:focus={handleTouch} />
         </div>
+        <span class="text-danger">
+          {error.apiStatus ? 'Invalid FTP Seer API or Host' : ''}
+        </span>
         <button class="btn btn-outline-primary mt-3" type="submit">
           Start the Journey
         </button>
       </form>
     </aside>
   </section>
-  <Footer></Footer>
+  <Footer />
 </div>
