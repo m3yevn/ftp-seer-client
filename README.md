@@ -1,4 +1,5 @@
 # FTP Seer Client 🔍
+by m3yevn
 
 Frontend Web Client for exploring FTP directory built with SvelteJs + Sapper Framework :sparkles:
 
