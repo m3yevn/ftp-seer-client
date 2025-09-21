@@ -20,7 +20,7 @@ A modern, responsive web interface for exploring FTP directories. Built with **A
    npm install
    ```
 
-2. **Start development server:**
+2. **Start development server:**add
    ```bash
    npm run dev
    ```
@@ -33,6 +33,41 @@ A modern, responsive web interface for exploring FTP directories. Built with **A
    ```bash
    npm run build
    ```
+
+## 🌐 Deployment on Vercel
+
+This project is optimized for deployment on Vercel with static site generation.
+
+### Quick Deploy
+
+1. **Push your code to GitHub:**
+   ```bash
+   git add .
+   git commit -m "Prepare for Vercel deployment"
+   git push origin main
+   ```
+
+2. **Deploy to Vercel:**
+   - Go to [vercel.com](https://vercel.com)
+   - Click "New Project"
+   - Import your GitHub repository
+   - Vercel will automatically detect it's an Astro project
+   - Click "Deploy"
+
+### Vercel CLI Deploy
+
+```bash
+npm install -g vercel
+vercel
+```
+
+### Configuration
+
+The project includes:
+- ✅ `vercel.json` - Vercel deployment configuration
+- ✅ `.vercelignore` - Files to exclude from deployment
+- ✅ Static site generation optimized for Vercel
+- ✅ Node.js engine specification
 
 ## 📁 Project Structure
 

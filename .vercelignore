@@ -1,0 +1,8 @@
+node_modules
+.astro
+.env
+.env.local
+.env.production
+dist
+.git
+README.md
