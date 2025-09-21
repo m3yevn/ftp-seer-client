@@ -1,0 +1,809 @@
+---
+// Astro component script (runs at build time)
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="FTP Seer Client Demo - Try exploring FTP directories with our interactive demo">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo - FTP Seer Client</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm border-b border-blue-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <a href="/" class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                            </svg>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900">FTP Seer</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/" class="text-gray-600 hover:text-blue-600 transition-colors">← Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                FTP Directory Explorer Demo
+            </h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Try exploring FTP directories using the FTP Seer API. Select a server and browse files and folders.
+            </p>
+        </div>
+
+        <!-- Server Selection -->
+        <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-blue-100 mb-8">
+            <h2 class="text-xl font-semibold text-gray-900 mb-6">Select FTP Server</h2>
+            <div class="grid md:grid-cols-3 gap-4">
+                <button 
+                    id="drivehq-btn"
+                    class="server-btn p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all text-left group"
+                    data-server="drivehq"
+                >
+                    <div class="flex items-center space-x-3 mb-2">
+                        <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition-colors">
+                            <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                            </svg>
+                        </div>
+                        <span class="font-semibold text-gray-900">DriveHQ</span>
+                    </div>
+                    <p class="text-sm text-gray-600">ftp.drivehq.com • Public FTP server</p>
+                </button>
+
+                <button 
+                    id="rebex-btn"
+                    class="server-btn p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all text-left group"
+                    data-server="rebex"
+                >
+                    <div class="flex items-center space-x-3 mb-2">
+                        <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                            <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                            </svg>
+                        </div>
+                        <span class="font-semibold text-gray-900">Rebex Test</span>
+                    </div>
+                    <p class="text-sm text-gray-600">test.rebex.net • Test FTP server</p>
+                </button>
+
+                <button 
+                    id="custom-btn"
+                    class="server-btn p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all text-left group"
+                    data-server="custom"
+                >
+                    <div class="flex items-center space-x-3 mb-2">
+                        <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center group-hover:bg-purple-200 transition-colors">
+                            <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z"/>
+                            </svg>
+                        </div>
+                        <span class="font-semibold text-gray-900">Custom Server</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Enter your own FTP details</p>
+                </button>
+            </div>
+        </div>
+
+        <!-- Custom Server Form -->
+        <div id="custom-form" class="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-blue-100 mb-8 hidden">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Custom FTP Server Configuration</h3>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Host</label>
+                    <input type="text" id="custom-host" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="ftp.example.com">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Port</label>
+                    <input type="number" id="custom-port" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="21" value="21">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                    <input type="text" id="custom-username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="anonymous">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <input type="password" id="custom-password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="password">
+                </div>
+            </div>
+            <button id="connect-custom" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                Connect to Custom Server
+            </button>
+        </div>
+
+        <!-- Directory Browser -->
+        <div id="directory-browser" class="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-blue-100 hidden">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-semibold text-gray-900">Directory Browser</h2>
+                <div class="flex items-center space-x-2">
+                    <button id="refresh-btn" class="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                    </button>
+                    <button id="back-btn" class="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div id="breadcrumb" class="mb-4">
+                <div class="flex items-center space-x-2 text-sm text-gray-600">
+                    <span>Current path:</span>
+                    <span id="current-path" class="font-mono bg-gray-100 px-2 py-1 rounded">/</span>
+                </div>
+            </div>
+
+            <div id="directory-content" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Directory content will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loading" class="hidden text-center py-8">
+            <div class="inline-flex items-center space-x-2">
+                <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+                <span class="text-gray-600">Loading...</span>
+            </div>
+        </div>
+
+        <!-- Error Message -->
+        <div id="error-message" class="hidden bg-red-50 border border-red-200 rounded-lg p-4 mb-8">
+            <div class="flex items-center space-x-2">
+                <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-red-800 font-medium">Error</span>
+            </div>
+            <p id="error-text" class="text-red-700 mt-1"></p>
+        </div>
+    </main>
+
+    <!-- File Viewer Modal -->
+    <div id="file-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200">
+                <div class="flex items-center space-x-3">
+                    <div id="file-icon" class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <!-- File icon will be inserted here -->
+                    </div>
+                    <div>
+                        <h3 id="file-name" class="text-lg font-semibold text-gray-900"></h3>
+                        <p id="file-info" class="text-sm text-gray-500"></p>
+                    </div>
+                </div>
+                <button id="close-modal" class="text-gray-400 hover:text-gray-600 p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6 overflow-auto max-h-[75vh]">
+                <!-- Content will be dynamically inserted here -->
+                <div id="file-content-container">
+                    <div id="file-loading" class="flex items-center justify-center py-8">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                        <span class="ml-3 text-gray-600">Loading file content...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://ftp-seer-api.vercel.app';
+        let currentServer = null;
+        let currentPath = '/';
+
+        // Server selection
+        document.querySelectorAll('.server-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const server = btn.dataset.server;
+                selectServer(server);
+            });
+        });
+
+        function selectServer(server) {
+            // Remove active state from all buttons
+            document.querySelectorAll('.server-btn').forEach(b => {
+                b.classList.remove('border-blue-500', 'bg-blue-50');
+                b.classList.add('border-gray-200');
+            });
+
+            // Add active state to selected button
+            const selectedBtn = document.querySelector(`[data-server="${server}"]`);
+            selectedBtn.classList.add('border-blue-500', 'bg-blue-50');
+            selectedBtn.classList.remove('border-gray-200');
+
+            if (server === 'custom') {
+                document.getElementById('custom-form').classList.remove('hidden');
+            } else {
+                document.getElementById('custom-form').classList.add('hidden');
+                currentServer = server;
+                loadDirectory('/');
+            }
+        }
+
+        // Custom server connection
+        document.getElementById('connect-custom').addEventListener('click', () => {
+            const host = document.getElementById('custom-host').value;
+            const port = document.getElementById('custom-port').value;
+            const username = document.getElementById('custom-username').value;
+            const password = document.getElementById('custom-password').value;
+
+            if (!host || !username) {
+                showError('Please fill in host and username fields');
+                return;
+            }
+
+            currentServer = {
+                host,
+                port: port || 21,
+                username,
+                password
+            };
+
+            loadDirectory('/');
+        });
+
+        async function loadDirectory(path) {
+            showLoading(true);
+            hideError();
+
+            try {
+                let url;
+                if (typeof currentServer === 'string') {
+                    // Predefined server - use host parameter with actual hostnames
+                    let host;
+                    switch(currentServer) {
+                        case 'drivehq':
+                            host = 'ftp.drivehq.com';
+                            break;
+                        case 'rebex':
+                            host = 'test.rebex.net';
+                            break;
+                        default:
+                            throw new Error('Invalid server selection');
+                    }
+                    url = `${API_BASE}/api/directory?host=${encodeURIComponent(host)}&path=${encodeURIComponent(path)}`;
+                } else {
+                    // Custom server
+                    url = `${API_BASE}/api/directory?host=${encodeURIComponent(currentServer.host)}&port=${currentServer.port}&username=${encodeURIComponent(currentServer.username)}&password=${encodeURIComponent(currentServer.password)}&path=${encodeURIComponent(path)}`;
+                }
+
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || 'Failed to load directory');
+                }
+
+                displayDirectory(data, path);
+                currentPath = path;
+                document.getElementById('current-path').textContent = path;
+                document.getElementById('directory-browser').classList.remove('hidden');
+
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function displayDirectory(data, path) {
+            const container = document.getElementById('directory-content');
+            container.innerHTML = '';
+
+            // Parse the API response structure
+            let items = [];
+            if (data.status === 'success' && data.data && Array.isArray(data.data)) {
+                items = data.data;
+            } else if (Array.isArray(data)) {
+                items = data;
+            }
+
+            // Separate directories and files based on type
+            const directories = items.filter(item => item.type === 1 || item.type === 'directory');
+            const files = items.filter(item => item.type === 0 || item.type === 'file');
+
+            // Display directories first
+            if (directories.length > 0) {
+                directories.forEach(dir => {
+                    const item = createDirectoryItem(dir, path);
+                    container.appendChild(item);
+                });
+            }
+
+            // Display files
+            if (files.length > 0) {
+                files.forEach(file => {
+                    const item = createFileItem(file, path);
+                    container.appendChild(item);
+                });
+            }
+
+            // Show empty state if no content
+            if (directories.length === 0 && files.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full flex flex-col items-center justify-center py-16 text-gray-500">
+                        <div class="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center mb-4">
+                            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-2">Empty Directory</h3>
+                        <p class="text-gray-500">This directory contains no files or folders.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function createDirectoryItem(dir, currentPath) {
+            const item = document.createElement('div');
+            item.className = 'bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md hover:border-blue-200 cursor-pointer transition-all duration-200 group';
+            
+            const modifiedDate = dir.time ? formatDate(new Date(dir.time)) : '';
+            const permissions = formatPermissions(dir);
+            
+            item.innerHTML = `
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200">
+                        <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/>
+                        </svg>
+                    </div>
+                    <div class="w-full">
+                        <h3 class="font-semibold text-gray-900 mb-1 truncate" title="${dir.name}">${dir.name}</h3>
+                        <p class="text-sm text-gray-500 mb-2">Directory</p>
+                        <div class="flex flex-col items-center space-y-1 text-xs text-gray-400">
+                            ${modifiedDate ? `<span>${modifiedDate}</span>` : ''}
+                            ${permissions ? `<span class="font-mono">${permissions}</span>` : ''}
+                            ${dir.owner ? `<span>${dir.owner}:${dir.group}</span>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            item.addEventListener('click', () => {
+                const newPath = currentPath === '/' ? `/${dir.name}` : `${currentPath}/${dir.name}`;
+                loadDirectory(newPath);
+            });
+
+            return item;
+        }
+
+        function createFileItem(file, currentPath) {
+            const item = document.createElement('div');
+            item.className = 'bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md hover:border-green-200 cursor-pointer transition-all duration-200 group';
+            
+            const fileIcon = getFileIcon(file.name);
+            const fileSize = formatFileSize(parseInt(file.size));
+            const modifiedDate = file.time ? formatDate(new Date(file.time)) : '';
+            const permissions = formatPermissions(file);
+
+            item.innerHTML = `
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-100 to-green-200 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200">
+                        ${fileIcon}
+                    </div>
+                    <div class="w-full">
+                        <h3 class="font-semibold text-gray-900 mb-1 truncate" title="${file.name}">${file.name}</h3>
+                        <p class="text-sm text-gray-500 mb-2">${fileSize}</p>
+                        <div class="flex flex-col items-center space-y-1 text-xs text-gray-400">
+                            ${modifiedDate ? `<span>${modifiedDate}</span>` : ''}
+                            ${permissions ? `<span class="font-mono">${permissions}</span>` : ''}
+                            ${file.owner ? `<span>${file.owner}:${file.group}</span>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            item.addEventListener('click', () => {
+                viewFile(file, currentPath);
+            });
+
+            return item;
+        }
+
+        function getFileIcon(filename) {
+            const ext = filename.split('.').pop().toLowerCase();
+            
+            if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'].includes(ext)) {
+                return `<svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+                </svg>`;
+            } else if (['txt', 'md', 'json', 'xml', 'html', 'css', 'js', 'ts', 'jsx', 'tsx'].includes(ext)) {
+                return `<svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/>
+                </svg>`;
+            } else if (['pdf'].includes(ext)) {
+                return `<svg class="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/>
+                </svg>`;
+            } else if (['zip', 'rar', '7z', 'tar', 'gz'].includes(ext)) {
+                return `<svg class="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2z" clip-rule="evenodd"/>
+                </svg>`;
+            } else if (['mp3', 'wav', 'flac', 'ogg'].includes(ext)) {
+                return `<svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.369 4.369 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/>
+                </svg>`;
+            } else if (['mp4', 'avi', 'mov', 'wmv', 'flv'].includes(ext)) {
+                return `<svg class="w-8 h-8 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2 6a2 2 0 012-2h6l2 2h6a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
+                </svg>`;
+            } else {
+                return `<svg class="w-8 h-8 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/>
+                </svg>`;
+            }
+        }
+
+        function getFileType(filename) {
+            const ext = filename.split('.').pop().toLowerCase();
+            
+            if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'].includes(ext)) {
+                return 'Image';
+            } else if (['txt', 'md'].includes(ext)) {
+                return 'Text';
+            } else if (['json', 'xml', 'html', 'css', 'js', 'ts', 'jsx', 'tsx'].includes(ext)) {
+                return 'Code';
+            } else if (['pdf'].includes(ext)) {
+                return 'PDF';
+            } else if (['zip', 'rar', '7z', 'tar', 'gz'].includes(ext)) {
+                return 'Archive';
+            } else if (['mp3', 'wav', 'flac', 'ogg'].includes(ext)) {
+                return 'Audio';
+            } else if (['mp4', 'avi', 'mov', 'wmv', 'flv'].includes(ext)) {
+                return 'Video';
+            } else {
+                return 'File';
+            }
+        }
+
+        function formatDate(date) {
+            if (!date) return '';
+            
+            try {
+                if (typeof date === 'string') {
+                    date = new Date(date);
+                }
+                return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            } catch (error) {
+                return date.toString();
+            }
+        }
+
+        function formatPermissions(item) {
+            if (!item.userPermissions || !item.groupPermissions || !item.otherPermissions) {
+                return '';
+            }
+
+            const formatPerm = (perm) => {
+                let str = '';
+                str += perm.read ? 'r' : '-';
+                str += perm.write ? 'w' : '-';
+                str += perm.exec ? 'x' : '-';
+                return str;
+            };
+
+            return formatPerm(item.userPermissions) + formatPerm(item.groupPermissions) + formatPerm(item.otherPermissions);
+        }
+
+        function formatFileSize(bytes) {
+            if (!bytes) return 'Unknown size';
+            
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(1024));
+            return Math.round(bytes / Math.pow(1024, i) * 100) / 100 + ' ' + sizes[i];
+        }
+
+        async function viewFile(file, currentPath) {
+            // Show modal and loading state
+            document.getElementById('file-modal').classList.remove('hidden');
+            document.getElementById('file-content-container').innerHTML = '<div class="flex items-center justify-center py-8"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div><span class="ml-3 text-gray-600">Loading file content...</span></div>';
+
+            try {
+                let url;
+                const filePath = currentPath === '/' ? `/${file.name}` : `${currentPath}/${file.name}`;
+                
+                if (typeof currentServer === 'string') {
+                    // Predefined server - use host parameter with actual hostnames
+                    let host;
+                    switch(currentServer) {
+                        case 'drivehq':
+                            host = 'ftp.drivehq.com';
+                            break;
+                        case 'rebex':
+                            host = 'test.rebex.net';
+                            break;
+                        default:
+                            throw new Error('Invalid server selection');
+                    }
+                    url = `${API_BASE}/api/file?host=${encodeURIComponent(host)}&path=${encodeURIComponent(filePath)}`;
+                } else {
+                    url = `${API_BASE}/api/file?host=${encodeURIComponent(currentServer.host)}&port=${currentServer.port}&username=${encodeURIComponent(currentServer.username)}&password=${encodeURIComponent(currentServer.password)}&path=${encodeURIComponent(filePath)}`;
+                }
+
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || 'Failed to load file');
+                }
+
+                // Update modal header with comprehensive file details
+                document.getElementById('file-name').textContent = file.name;
+                document.getElementById('file-icon').innerHTML = getFileIcon(file.name);
+                
+                // Create detailed file info with ALL available metadata
+                const fileSize = formatFileSize(parseInt(file.size));
+                const permissions = formatPermissions(file.userPermissions, file.groupPermissions, file.otherPermissions);
+                const modifiedDate = formatDate(new Date(parseInt(file.time)));
+                const fileType = getFileType(file.name);
+                
+                // Detailed permissions breakdown
+                const userPerms = `${file.userPermissions.read ? 'r' : '-'}${file.userPermissions.write ? 'w' : '-'}${file.userPermissions.exec ? 'x' : '-'}`;
+                const groupPerms = `${file.groupPermissions.read ? 'r' : '-'}${file.groupPermissions.write ? 'w' : '-'}${file.groupPermissions.exec ? 'x' : '-'}`;
+                const otherPerms = `${file.otherPermissions.read ? 'r' : '-'}${file.otherPermissions.write ? 'w' : '-'}${file.otherPermissions.exec ? 'x' : '-'}`;
+                
+                document.getElementById('file-info').innerHTML = `
+                    <div class="space-y-2">
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div class="flex items-center gap-2">
+                                <span class="font-medium text-gray-700">📏 Size:</span>
+                                <span class="text-gray-600">${fileSize}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-medium text-gray-700">📁 Type:</span>
+                                <span class="text-gray-600">${fileType}</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div class="flex items-center gap-2">
+                                <span class="font-medium text-gray-700">👤 Owner:</span>
+                                <span class="text-gray-600">${file.owner}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-medium text-gray-700">👥 Group:</span>
+                                <span class="text-gray-600">${file.group}</span>
+                            </div>
+                        </div>
+                        <div class="text-sm">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="font-medium text-gray-700">🔒 Permissions:</span>
+                                <span class="text-gray-600 font-mono">${permissions}</span>
+                            </div>
+                            <div class="ml-6 text-xs text-gray-500">
+                                <span class="mr-4">User: ${userPerms}</span>
+                                <span class="mr-4">Group: ${groupPerms}</span>
+                                <span>Other: ${otherPerms}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm">
+                            <span class="font-medium text-gray-700">📅 Modified:</span>
+                            <span class="text-gray-600">${modifiedDate}</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm">
+                            <span class="font-medium text-gray-700">🕒 Timestamp:</span>
+                            <span class="text-gray-600 font-mono">${file.time}</span>
+                        </div>
+                    </div>
+                `;
+
+                // Display content based on file type
+                const fileContent = data.status === 'success' && data.data ? data.data : (data.content || 'File content not available');
+                displayFileContent(file.name, fileContent);
+
+            } catch (error) {
+                document.getElementById('file-content-container').innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-8 text-red-600">
+                        <svg class="w-12 h-12 mb-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                        </svg>
+                        <h3 class="text-lg font-semibold mb-2">Error Loading File</h3>
+                        <p class="text-sm">${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayFileContent(filename, content) {
+            const container = document.getElementById('file-content-container');
+            const ext = filename.split('.').pop().toLowerCase();
+
+            if (ext === 'html' || ext === 'htm') {
+                // HTML content - render as HTML in iframe for safety
+                const safeContent = content.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                container.innerHTML = `
+                    <div class="border rounded-lg overflow-hidden bg-white">
+                        <div class="bg-gray-100 px-4 py-2 border-b text-sm text-gray-600 font-medium">
+                            HTML Preview
+                        </div>
+                        <iframe srcdoc="${safeContent}" class="w-full h-[65vh] border-0"></iframe>
+                    </div>
+                `;
+            } else if (ext === 'md') {
+                // Markdown content - convert to HTML
+                const htmlContent = convertMarkdownToHtml(content);
+                container.innerHTML = `
+                    <div class="prose max-w-none bg-white p-6 rounded-lg border">
+                        <div class="bg-gray-100 px-4 py-2 -m-6 mb-6 border-b text-sm text-gray-600 font-medium rounded-t-lg">
+                            Markdown Preview
+                        </div>
+                        ${htmlContent}
+                    </div>
+                `;
+            } else if (['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp', 'svg'].includes(ext)) {
+                // Image files - show as binary data for now
+                container.innerHTML = `
+                    <div class="bg-white rounded-lg border">
+                        <div class="bg-gray-100 px-4 py-2 border-b text-sm text-gray-600 font-medium rounded-t-lg">
+                            Image File
+                        </div>
+                        <div class="p-4">
+                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                <div class="flex items-center">
+                                    <svg class="w-8 h-8 text-blue-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <div>
+                                        <p class="text-blue-800 font-medium">${filename}</p>
+                                        <p class="text-blue-600 text-sm">Binary image file - ${formatFileSize(content.length)}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (['txt', 'log'].includes(ext)) {
+                // Plain text content
+                container.innerHTML = `
+                    <div class="bg-white rounded-lg border">
+                        <div class="bg-gray-100 px-4 py-2 border-b text-sm text-gray-600 font-medium rounded-t-lg">
+                            Text Content
+                        </div>
+                        <pre class="p-4 overflow-auto text-sm font-mono whitespace-pre-wrap max-h-[65vh]">${escapeHtml(content)}</pre>
+                    </div>
+                `;
+            } else if (['json', 'xml'].includes(ext)) {
+                // JSON/XML with syntax highlighting
+                try {
+                    const formatted = ext === 'json' ? JSON.stringify(JSON.parse(content), null, 2) : content;
+                    container.innerHTML = `
+                        <div class="bg-white rounded-lg border">
+                            <div class="bg-gray-100 px-4 py-2 border-b text-sm text-gray-600 font-medium rounded-t-lg">
+                                ${ext.toUpperCase()} Content
+                            </div>
+                            <pre class="p-4 overflow-auto text-sm font-mono whitespace-pre-wrap max-h-[65vh] bg-gray-50">${escapeHtml(formatted)}</pre>
+                        </div>
+                    `;
+                } catch (e) {
+                    container.innerHTML = `
+                        <div class="bg-white rounded-lg border">
+                            <div class="bg-gray-100 px-4 py-2 border-b text-sm text-gray-600 font-medium rounded-t-lg">
+                                ${ext.toUpperCase()} Content
+                            </div>
+                            <pre class="p-4 overflow-auto text-sm font-mono whitespace-pre-wrap max-h-[65vh] bg-gray-50">${escapeHtml(content)}</pre>
+                        </div>
+                    `;
+                }
+            } else if (['css', 'js', 'ts', 'jsx', 'tsx', 'py', 'java', 'cpp', 'c', 'h', 'php', 'rb', 'go'].includes(ext)) {
+                // Code files
+                container.innerHTML = `
+                    <div class="bg-white rounded-lg border">
+                        <div class="bg-gray-100 px-4 py-2 border-b text-sm text-gray-600 font-medium rounded-t-lg">
+                            ${ext.toUpperCase()} Code
+                        </div>
+                        <pre class="p-4 overflow-auto text-sm font-mono whitespace-pre-wrap max-h-[65vh] bg-gray-50">${escapeHtml(content)}</pre>
+                    </div>
+                `;
+            } else {
+                // Other formats - display as raw text
+                container.innerHTML = `
+                    <div class="bg-white rounded-lg border">
+                        <div class="bg-gray-100 px-4 py-2 border-b text-sm text-gray-600 font-medium rounded-t-lg">
+                            File Content
+                        </div>
+                        <pre class="p-4 overflow-auto text-sm font-mono whitespace-pre-wrap max-h-[65vh] bg-gray-50">${escapeHtml(content)}</pre>
+                    </div>
+                `;
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function convertMarkdownToHtml(markdown) {
+            // Enhanced markdown to HTML conversion
+            return markdown
+                // Headers
+                .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold mb-4 text-gray-900">$1</h1>')
+                .replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold mb-3 text-gray-800">$1</h2>')
+                .replace(/^### (.*$)/gim, '<h3 class="text-lg font-semibold mb-2 text-gray-700">$1</h3>')
+                .replace(/^#### (.*$)/gim, '<h4 class="text-base font-semibold mb-2 text-gray-700">$1</h4>')
+                // Bold and italic
+                .replace(/\*\*(.*?)\*\*/gim, '<strong class="font-bold">$1</strong>')
+                .replace(/\*(.*?)\*/gim, '<em class="italic">$1</em>')
+                // Code
+                .replace(/`(.*?)`/gim, '<code class="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">$1</code>')
+                .replace(/```([\s\S]*?)```/gim, '<pre class="bg-gray-100 p-3 rounded-lg overflow-auto text-sm font-mono my-4"><code>$1</code></pre>')
+                // Links
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener">$1</a>')
+                // Lists
+                .replace(/^\* (.*$)/gim, '<li class="ml-4 list-disc">$1</li>')
+                .replace(/^- (.*$)/gim, '<li class="ml-4 list-disc">$1</li>')
+                .replace(/^(\d+)\. (.*$)/gim, '<li class="ml-4 list-decimal">$2</li>')
+                // Line breaks and paragraphs
+                .replace(/\n\n/gim, '</p><p class="mb-4">')
+                .replace(/\n/gim, '<br>')
+                // Wrap in paragraph tags
+                .replace(/^/, '<p class="mb-4">')
+                .replace(/$/, '</p>');
+        }
+
+
+        // Event listeners
+        document.getElementById('refresh-btn').addEventListener('click', () => {
+            loadDirectory(currentPath);
+        });
+
+        document.getElementById('back-btn').addEventListener('click', () => {
+            if (currentPath !== '/') {
+                const parentPath = currentPath.substring(0, currentPath.lastIndexOf('/')) || '/';
+                loadDirectory(parentPath);
+            }
+        });
+
+        document.getElementById('close-modal').addEventListener('click', () => {
+            document.getElementById('file-modal').classList.add('hidden');
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('file-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'file-modal') {
+                document.getElementById('file-modal').classList.add('hidden');
+            }
+        });
+
+        function showLoading(show) {
+            document.getElementById('loading').classList.toggle('hidden', !show);
+        }
+
+        function showError(message) {
+            document.getElementById('error-text').textContent = message;
+            document.getElementById('error-message').classList.remove('hidden');
+        }
+
+        function hideError() {
+            document.getElementById('error-message').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
