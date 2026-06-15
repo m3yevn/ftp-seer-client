@@ -1,0 +1,67 @@
+---
+const site = "https://ftp-seer-client.vercel.app";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="FTP Seer documentation — API reference, quick start, and deployment.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docs — FTP Seer</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen font-sans text-gray-800">
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm border-b border-blue-100">
+        <div class="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="/" class="font-bold text-gray-900">FTP Seer</a>
+            <div class="flex gap-6 text-sm">
+                <a href="/" class="text-gray-600 hover:text-blue-600">Home</a>
+                <a href="/demo" class="text-gray-600 hover:text-blue-600">Demo</a>
+                <a href="/docs" class="text-blue-600 font-medium">Docs</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-4 py-12">
+        <h1 class="text-3xl font-bold text-gray-900 mb-4">Documentation</h1>
+        <p class="text-gray-600 mb-10">Browse FTP directories through a modern web UI — Astro client + Express API.</p>
+
+        <section class="mb-10">
+            <h2 class="text-xl font-semibold text-gray-900 mb-3">Projects</h2>
+            <ul class="space-y-2 text-gray-700">
+                <li><strong>ftp-seer-client</strong> — Astro + Tailwind UI (<a href={site} class="text-blue-600">{site}</a>)</li>
+                <li><strong>ftp-seer-api</strong> — Express backend (<a href="https://ftp-seer-api.vercel.app" class="text-blue-600">ftp-seer-api.vercel.app</a>)</li>
+            </ul>
+        </section>
+
+        <section class="mb-10">
+            <h2 class="text-xl font-semibold text-gray-900 mb-3">Quick start</h2>
+            <pre class="bg-white rounded-xl p-4 text-sm overflow-x-auto border border-blue-100 shadow-sm">git clone https://github.com/m3yevn/ftp-seer-client
+cd ftp-seer-client && npm install && npm run dev
+
+# API (separate repo)
+git clone https://github.com/m3yevn/ftp-seer-api
+cd ftp-seer-api && npm install && npm start</pre>
+        </section>
+
+        <section class="mb-10">
+            <h2 class="text-xl font-semibold text-gray-900 mb-3">API overview</h2>
+            <p class="text-gray-600 mb-4">REST endpoints for listing FTP directories (see ftp-seer-api README for full reference).</p>
+            <pre class="bg-white rounded-xl p-4 text-sm border border-blue-100">GET /health
+GET /ftp/list?host=...&amp;user=...&amp;password=...</pre>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-semibold text-gray-900 mb-3">Rebirth checklist</h2>
+            <ul class="list-disc ml-6 text-gray-700 space-y-1">
+                <li>✅ Client landing + demo (Astro)</li>
+                <li>✅ Docs page (this page)</li>
+                <li>⬜ Unified dark theme across client + API docs</li>
+                <li>⬜ npm publish CLI helper (optional)</li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
