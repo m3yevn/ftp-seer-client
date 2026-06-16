@@ -20,7 +20,7 @@ A modern, responsive web interface for exploring FTP directories. Built with **A
    npm install
    ```
 
-2. **Start development server:**add
+2. **Start development server:**
    ```bash
    npm run dev
    ```
